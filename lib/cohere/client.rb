@@ -126,6 +126,7 @@ module Cohere
 
     private
 
+    # standard:disable Lint/DuplicateMethods
     def connection
       @connection ||= Faraday.new(url: ENDPOINT_URL) do |faraday|
         if api_key
@@ -136,5 +137,6 @@ module Cohere
         faraday.adapter Faraday.default_adapter
       end
     end
+    # standard:enable Lint/DuplicateMethods
   end
 end
