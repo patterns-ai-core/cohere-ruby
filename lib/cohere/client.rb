@@ -30,8 +30,8 @@ module Cohere
       logit_bias: nil,
       truncate: nil
     )
-      response = connection.post('generate') do |req|
-        req.body = { prompt: prompt }
+      response = connection.post("generate") do |req|
+        req.body = {prompt: prompt}
         req.body[:model] = model if model
         req.body[:num_generations] = num_generations if num_generations
         req.body[:max_tokens] = max_tokens if max_tokens
@@ -55,8 +55,8 @@ module Cohere
       model: nil,
       truncate: nil
     )
-      response = connection.post('embed') do |req|
-        req.body = { texts: texts }
+      response = connection.post("embed") do |req|
+        req.body = {texts: texts}
         req.body[:model] = model if model
         req.body[:truncate] = truncate if truncate
       end
@@ -70,7 +70,7 @@ module Cohere
       present: nil,
       truncate: nil
     )
-      response = connection.post('classify') do |req|
+      response = connection.post("classify") do |req|
         req.body = {
           inputs: inputs,
           examples: examples
@@ -83,22 +83,22 @@ module Cohere
     end
 
     def tokenize(text:)
-      response = connection.post('tokenize') do |req|
-        req.body = { text: text }
+      response = connection.post("tokenize") do |req|
+        req.body = {text: text}
       end
       response.body
     end
 
     def detokenize(tokens:)
-      response = connection.post('detokenize') do |req|
-        req.body = { tokens: tokens }
+      response = connection.post("detokenize") do |req|
+        req.body = {tokens: tokens}
       end
       response.body
     end
 
     def detect_language(texts:)
-      response = connection.post('detect-language') do |req|
-        req.body = { texts: texts }
+      response = connection.post("detect-language") do |req|
+        req.body = {texts: texts}
       end
       response.body
     end
@@ -112,8 +112,8 @@ module Cohere
       temperature: nil,
       additional_command: nil
     )
-      response = connection.post('summarize') do |req|
-        req.body = { text: text }
+      response = connection.post("summarize") do |req|
+        req.body = {text: text}
         req.body[:length] = length if length
         req.body[:format] = format if format
         req.body[:model] = model if model
@@ -126,6 +126,7 @@ module Cohere
 
     private
 
+    # standard:disable Lint/DuplicateMethods
     def connection
       @connection ||= Faraday.new(url: ENDPOINT_URL) do |faraday|
         if api_key
@@ -136,5 +137,6 @@ module Cohere
         faraday.adapter Faraday.default_adapter
       end
     end
+    # standard:enable Lint/DuplicateMethods
   end
 end
