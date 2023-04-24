@@ -6,6 +6,5 @@ module Cohere
   class Error < StandardError; end
   # Your code goes here...
 
-  autoload :Base, "cohere/base"
   autoload :Client, "cohere/client"
 end

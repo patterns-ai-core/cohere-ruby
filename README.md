@@ -28,6 +28,40 @@ client = Cohere::Client.new(
   api_key: ENV['COHERE_API_KEY']
 )
 ```
+### Generate
+```ruby
+client.generate()
+```
+
+### Embed
+```ruby
+client.embed()
+```
+
+### Classify
+```ruby
+client.classify()
+```
+
+### Tokenize
+```ruby
+client.tokenize()
+```
+
+### Detokenize
+```ruby
+client.detokenize()
+```
+
+### Detect language
+```ruby
+client.detect_language()
+```
+
+### Summarize
+```ruby
+client.summarize()
+```
 
 ## Development
 

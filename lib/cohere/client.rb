@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 require "faraday"
-require "graphlient"
 
 module Weaviate
   class Client
-    attr_reader :api_key
+    attr_reader :api_key, :connection
 
     ENDPOINT_URL = "https://api.cohere.ai/v1"
 
