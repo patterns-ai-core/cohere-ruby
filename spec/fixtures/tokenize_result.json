@@ -1,0 +1,17 @@
+{
+  "tokens": [
+    33555,
+    1114,
+    34
+  ],
+  "token_strings": [
+    "hello",
+    " world",
+    "!"
+  ],
+  "meta": {
+    "api_version": {
+      "version": "1"
+    }
+  }
+}

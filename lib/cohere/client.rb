@@ -2,7 +2,7 @@
 
 require "faraday"
 
-module Weaviate
+module Cohere
   class Client
     attr_reader :api_key, :connection
 
@@ -102,7 +102,6 @@ module Weaviate
       end
       response.body
     end
-    end
 
     def summarize(
       text:,
@@ -122,6 +121,7 @@ module Weaviate
         req.body[:temperature] = temperature if temperature
         req.body[:additional_command] = additional_command if additional_command
       end
+      response.body
     end
 
     private

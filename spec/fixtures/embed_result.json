@@ -1,0 +1,10 @@
+{
+  "id": "83b78a65-8ede-44ed-a8dc-6afb3ad4a78b",
+  "texts": ["hello!"],
+  "embeddings": [[ 1.2177734, 0.67529297, 2.0742188 ]],
+  "meta": {
+    "api_version": {
+      "version": "1"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "faraday"
 require "cohere"
 
 RSpec.configure do |config|
