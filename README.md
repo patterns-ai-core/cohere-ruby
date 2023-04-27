@@ -24,6 +24,8 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ### Instantiating API client
 ```ruby
+require "cohere"
+
 client = Cohere::Client.new(
   api_key: ENV['COHERE_API_KEY']
 )
