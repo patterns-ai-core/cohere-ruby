@@ -26,7 +26,7 @@ module Cohere
       frequency_penalty: nil,
       presence_penalty: nil,
       end_sequences: nil,
-      stop_sequence: nil,
+      stop_sequences: nil,
       return_likelihoods: nil,
       logit_bias: nil,
       truncate: nil
@@ -43,7 +43,7 @@ module Cohere
         req.body[:frequency_penalty] = frequency_penalty if frequency_penalty
         req.body[:presence_penalty] = presence_penalty if presence_penalty
         req.body[:end_sequences] = end_sequences if end_sequences
-        req.body[:stop_sequence] = stop_sequence if stop_sequence
+        req.body[:stop_sequences] = stop_sequences if stop_sequences
         req.body[:return_likelihoods] = return_likelihoods if return_likelihoods
         req.body[:logit_bias] = logit_bias if logit_bias
         req.body[:truncate] = truncate if truncate
