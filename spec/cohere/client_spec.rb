@@ -91,6 +91,24 @@ RSpec.describe Cohere::Client do
     end
   end
 
+  describe "#tokenize_with_model" do
+    let(:tokenize_result) { JSON.parse(File.read("spec/fixtures/tokenize_result.json")) }
+    let(:response) { OpenStruct.new(body: tokenize_result) }
+
+    before do
+      allow_any_instance_of(Faraday::Connection).to receive(:post)
+        .with("tokenize")
+        .and_return(response)
+    end
+
+    it "returns a response" do
+      expect(instance.tokenize(
+        text: "Hello, world!",
+        model: "base"
+      ).dig("tokens")).to eq([33555, 1114, 34])
+    end
+  end
+
   describe "#detokenize" do
     let(:detokenize_result) { JSON.parse(File.read("spec/fixtures/detokenize_result.json")) }
     let(:response) { OpenStruct.new(body: detokenize_result) }
@@ -104,6 +122,24 @@ RSpec.describe Cohere::Client do
     it "returns a response" do
       expect(instance.detokenize(
         tokens: [33555, 1114, 34]
+      ).dig("text")).to eq("hello world!")
+    end
+  end
+
+  describe "#detokenize_with_model" do
+    let(:detokenize_result) { JSON.parse(File.read("spec/fixtures/detokenize_result.json")) }
+    let(:response) { OpenStruct.new(body: detokenize_result) }
+
+    before do
+      allow_any_instance_of(Faraday::Connection).to receive(:post)
+        .with("detokenize")
+        .and_return(response)
+    end
+
+    it "returns a response" do
+      expect(instance.detokenize(
+        tokens: [33555, 1114, 34],
+        model: "base"
       ).dig("text")).to eq("hello world!")
     end
   end

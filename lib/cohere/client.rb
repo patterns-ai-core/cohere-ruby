@@ -83,16 +83,16 @@ module Cohere
       response.body
     end
 
-    def tokenize(text:)
+    def tokenize(text:, model: nil)
       response = connection.post("tokenize") do |req|
-        req.body = {text: text}
+        req.body = model.nil? ? {text: text} : {text: text, model: model}
       end
       response.body
     end
 
-    def detokenize(tokens:)
+    def detokenize(tokens:, model: nil)
       response = connection.post("detokenize") do |req|
-        req.body = {tokens: tokens}
+        req.body = model.nil? ? {tokens: tokens} : {tokens: tokens, model: model}
       end
       response.body
     end
