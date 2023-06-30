@@ -8,7 +8,13 @@
 
 Cohere API client for Ruby.
 
-![Tests status](https://github.com/andreibondarev/cohere-ruby/actions/workflows/ci.yml/badge.svg) [![Gem Version](https://badge.fury.io/rb/cohere-ruby.svg)](https://badge.fury.io/rb/cohere-ruby)
+Part of the [Langchain.rb](https://github.com/andreibondarev/langchainrb) stack.
+
+![Tests status](https://github.com/andreibondarev/cohere-ruby/actions/workflows/ci.yml/badge.svg)
+[![Gem Version](https://badge.fury.io/rb/cohere-ruby.svg)](https://badge.fury.io/rb/cohere-ruby)
+[![Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://rubydoc.info/gems/cohere-ruby)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/andreibondarev/cohere-ruby/blob/main/LICENSE.txt)
+[![](https://dcbadge.vercel.app/api/server/WDARp7J2n8?compact=true&style=flat)](https://discord.gg/WDARp7J2n8)
 
 ## Installation
 
