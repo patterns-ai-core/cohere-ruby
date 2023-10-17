@@ -8,7 +8,7 @@ module Cohere
 
     ENDPOINT_URL = "https://api.cohere.ai/v1"
 
-    def initialize(api_key:)
+    def initialize(api_key)
       @api_key = api_key
     end
 
