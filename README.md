@@ -33,7 +33,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 require "cohere"
 
 client = Cohere::Client.new(
-  api_key: ENV['COHERE_API_KEY']
+  ENV['COHERE_API_KEY']
 )
 ```
 ### Generate
