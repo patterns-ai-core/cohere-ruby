@@ -53,11 +53,13 @@ module Cohere
     def embed(
       texts:,
       model: nil,
+      input_type: nil,
       truncate: nil
     )
       response = connection.post("embed") do |req|
         req.body = {texts: texts}
         req.body[:model] = model if model
+        req.body[:input_type] = model if input_type
         req.body[:truncate] = truncate if truncate
       end
       response.body
