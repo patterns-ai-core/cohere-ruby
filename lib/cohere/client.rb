@@ -12,6 +12,47 @@ module Cohere
       @api_key = api_key
     end
 
+    def chat(
+      message:,
+      model: nil,
+      stream: false,
+      preamble_override: nil,
+      chat_history: [],
+      conversation_id: nil,
+      prompt_truncation: nil,
+      connectors: [],
+      search_queries_only: false,
+      documents: [],
+      citation_quality: nil,
+      temperature: nil,
+      max_tokens: nil,
+      k: nil,
+      p: nil,
+      frequency_penalty: nil,
+      presence_penalty: nil
+    )
+      response = connection.post("chat") do |req|
+        req.body = {message: message}
+        req.body[:model] = model if model
+        req.body[:stream] = stream if stream
+        req.body[:preamble_override] = preamble_override if preamble_override
+        req.body[:chat_history] = chat_history if chat_history
+        req.body[:conversation_id] = conversation_id if conversation_id
+        req.body[:prompt_truncation] = prompt_truncation if prompt_truncation
+        req.body[:connectors] = connectors if connectors
+        req.body[:search_queries_only] = search_queries_only if search_queries_only
+        req.body[:documents] = documents if documents
+        req.body[:citation_quality] = citation_quality if citation_quality
+        req.body[:temperature] = temperature if temperature
+        req.body[:max_tokens] = max_tokens if max_tokens
+        req.body[:k] = k if k
+        req.body[:p] = p if p
+        req.body[:frequency_penalty] = frequency_penalty if frequency_penalty
+        req.body[:presence_penalty] = presence_penalty if presence_penalty
+      end
+      response.body
+    end
+
     # This endpoint generates realistic text conditioned on a given input.
     def generate(
       prompt:,
