@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+## [0.9.8] - 2024-02-10
+- Adding method for /chat endpoint
+
 ## [0.1.0] - 2023-04-23
 
 - Initial release
