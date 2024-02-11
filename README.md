@@ -43,6 +43,13 @@ client.generate(
 )
 ```
 
+### Chat
+```ruby
+client.chat(
+    message: "Hey! How are you?"
+)
+```
+
 ### Embed
 ```ruby
 client.embed(
