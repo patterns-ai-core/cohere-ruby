@@ -29,12 +29,16 @@ module Cohere
       k: nil,
       p: nil,
       frequency_penalty: nil,
-      presence_penalty: nil
+      presence_penalty: nil,
+      &block
     )
       response = connection.post("chat") do |req|
         req.body = {message: message}
         req.body[:model] = model if model
-        req.body[:stream] = stream if stream
+        if stream || block
+          req.body[:stream] = true
+          req.options.on_data = block if block
+        end
         req.body[:preamble_override] = preamble_override if preamble_override
         req.body[:chat_history] = chat_history if chat_history
         req.body[:conversation_id] = conversation_id if conversation_id
