@@ -35,9 +35,9 @@ module Cohere
       response = connection.post("chat") do |req|
         req.body = {message: message}
         req.body[:model] = model if model
-        if stream || block_given?
+        if stream || block
           req.body[:stream] = true
-          req.options.on_data = block if block_given?
+          req.options.on_data = block if block
         end
         req.body[:preamble_override] = preamble_override if preamble_override
         req.body[:chat_history] = chat_history if chat_history
