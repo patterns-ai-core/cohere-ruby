@@ -29,6 +29,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 ## Usage
 
 ### Instantiating API client
+
 ```ruby
 require "cohere"
 
@@ -36,7 +37,9 @@ client = Cohere::Client.new(
   ENV['COHERE_API_KEY']
 )
 ```
+
 ### Generate
+
 ```ruby
 client.generate(
     prompt: "Once upon a time in a magical land called"
@@ -44,13 +47,25 @@ client.generate(
 ```
 
 ### Chat
+
 ```ruby
 client.chat(
     message: "Hey! How are you?"
 )
 ```
 
+`chat` supports a streaming option. You can pass a block to the `chat` method and it will yield a new chunk as soon as it is received.
+
+```ruby
+client.chat(message: "Hey! How are you?", stream: true) do |chunk, overall_received_bytes|
+  puts "Received #{overall_received_bytes} bytes: #{chunk.force_encoding(Encoding::UTF_8)}"
+end
+```
+
+`force_encoding` is preferred to avoid JSON parsing issue when Cohere returns emoticon.
+
 ### Embed
+
 ```ruby
 client.embed(
     texts: ["hello!"]
@@ -58,6 +73,7 @@ client.embed(
 ```
 
 ### Classify
+
 ```ruby
 examples = [
     { text: "Dermatologists don't like her!", label: "Spam" },
@@ -84,6 +100,7 @@ client.classify(
 ```
 
 ### Tokenize
+
 ```ruby
 client.tokenize(
     text: "hello world!"
@@ -91,6 +108,7 @@ client.tokenize(
 ```
 
 ### Detokenize
+
 ```ruby
 client.detokenize(
     tokens: [33555, 1114 , 34]
@@ -98,6 +116,7 @@ client.detokenize(
 ```
 
 ### Detect language
+
 ```ruby
 client.detect_language(
     texts: ["Здравствуй, Мир"]
@@ -105,6 +124,7 @@ client.detect_language(
 ```
 
 ### Summarize
+
 ```ruby
 client.summarize(
     text: "..."
