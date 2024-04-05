@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+## [0.9.9] - 2024-04-05
+- Adding missing parameters to endpoints
+
 ## [0.9.8] - 2024-02-10
 - Adding method for /chat endpoint
 
