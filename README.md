@@ -64,6 +64,34 @@ end
 
 `force_encoding` is preferred to avoid JSON parsing issue when Cohere returns emoticon.
 
+`chat` supports Tool use (function calling).
+
+```ruby
+tools = [
+   {
+     name: "query_daily_sales_report",
+     description: "Connects to a database to retrieve overall sales volumes and sales information for a given day.",
+     parameter_definitions: {
+       day: {
+         description: "Retrieves sales data for this day, formatted as YYYY-MM-DD.",
+         type: "str",
+         required: true
+       }
+     }
+   }
+]
+
+message = "Can you provide a sales summary for 29th September 2023, and also give me some details about the products in the 'Electronics' category, for example their prices and stock levels?"
+
+client.chat(
+  model: model,
+  message: message,
+  tools: tools,
+)
+```
+
+
+
 ### Embed
 
 ```ruby
