@@ -16,6 +16,7 @@ module Cohere
       message:,
       model: nil,
       stream: false,
+      preamble: nil,
       preamble_override: nil,
       chat_history: [],
       conversation_id: nil,
@@ -39,6 +40,7 @@ module Cohere
           req.body[:stream] = true
           req.options.on_data = block if block
         end
+        req.body[:preamble] = preamble if preamble
         req.body[:preamble_override] = preamble_override if preamble_override
         req.body[:chat_history] = chat_history if chat_history
         req.body[:conversation_id] = conversation_id if conversation_id
