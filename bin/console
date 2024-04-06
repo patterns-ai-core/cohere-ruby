@@ -12,7 +12,7 @@ require "cohere"
 # Pry.start
 
 client = Cohere::Client.new(
-  api_key: ENV['COHERE_API_KEY']
+  ENV['COHERE_API_KEY']
 )
 
 require "irb"

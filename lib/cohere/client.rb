@@ -8,8 +8,9 @@ module Cohere
 
     ENDPOINT_URL = "https://api.cohere.ai/v1"
 
-    def initialize(api_key)
+    def initialize(api_key, timeout: nil)
       @api_key = api_key
+      @timeout = timeout
     end
 
     def chat(
@@ -181,7 +182,7 @@ module Cohere
 
     # standard:disable Lint/DuplicateMethods
     def connection
-      @connection ||= Faraday.new(url: ENDPOINT_URL) do |faraday|
+      @connection ||= Faraday.new(url: ENDPOINT_URL, request: { timeout: @timeout }) do |faraday|
         if api_key
           faraday.request :authorization, :Bearer, api_key
         end
