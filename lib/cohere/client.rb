@@ -182,7 +182,7 @@ module Cohere
 
     # standard:disable Lint/DuplicateMethods
     def connection
-      @connection ||= Faraday.new(url: ENDPOINT_URL, request: { timeout: @timeout }) do |faraday|
+      @connection ||= Faraday.new(url: ENDPOINT_URL, request: {timeout: @timeout}) do |faraday|
         if api_key
           faraday.request :authorization, :Bearer, api_key
         end
