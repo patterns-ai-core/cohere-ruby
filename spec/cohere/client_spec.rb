@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Cohere::Client do
-  let(:instance) { described_class.new(api_key: "123") }
+  let(:instance) { described_class.new("123") }
 
   describe "#generate" do
     let(:generate_result) { JSON.parse(File.read("spec/fixtures/generate_result.json")) }
