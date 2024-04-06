@@ -29,6 +29,7 @@ module Cohere
       max_tokens: nil,
       k: nil,
       p: nil,
+      seed: nil,
       frequency_penalty: nil,
       presence_penalty: nil,
       tools: [],
@@ -54,6 +55,7 @@ module Cohere
         req.body[:max_tokens] = max_tokens if max_tokens
         req.body[:k] = k if k
         req.body[:p] = p if p
+        req.body[:seed] = seed if seed
         req.body[:frequency_penalty] = frequency_penalty if frequency_penalty
         req.body[:presence_penalty] = presence_penalty if presence_penalty
         req.body[:tools] = tools if tools
