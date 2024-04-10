@@ -33,7 +33,7 @@ module Cohere
       seed: nil,
       frequency_penalty: nil,
       presence_penalty: nil,
-      tools: nil,
+      tools: [],
       tool_results: nil,
       &block
     )
