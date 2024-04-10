@@ -34,6 +34,7 @@ module Cohere
       frequency_penalty: nil,
       presence_penalty: nil,
       tools: [],
+      tool_results: [],
       &block
     )
       response = connection.post("chat") do |req|
@@ -60,6 +61,7 @@ module Cohere
         req.body[:frequency_penalty] = frequency_penalty if frequency_penalty
         req.body[:presence_penalty] = presence_penalty if presence_penalty
         req.body[:tools] = tools if tools
+        req.body[:tool_results] = tool_results if tool_results
       end
       response.body
     end
