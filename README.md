@@ -90,7 +90,20 @@ client.chat(
 )
 ```
 
+Once the function is called, results are passed through `tool_results` array so you can get insights on the next reply.
 
+```ruby
+client.chat(
+  model: model,
+  message: message,
+  tools: tool,
+  tool_results: [
+    {
+      rows: [['Ruby', 42]]
+    }
+  ]
+)
+```
 
 ### Embed
 
