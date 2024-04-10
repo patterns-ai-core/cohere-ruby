@@ -33,8 +33,8 @@ module Cohere
       seed: nil,
       frequency_penalty: nil,
       presence_penalty: nil,
-      tools: [],
-      tool_results: [],
+      tools: nil,
+      tool_results: nil,
       &block
     )
       response = connection.post("chat") do |req|
