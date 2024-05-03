@@ -19,7 +19,7 @@ module Cohere
       stream: false,
       preamble: nil,
       preamble_override: nil,
-      chat_history: [],
+      chat_history: nil,
       conversation_id: nil,
       prompt_truncation: nil,
       connectors: [],
