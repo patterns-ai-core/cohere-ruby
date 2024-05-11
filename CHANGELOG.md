@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+## [0.9.10] - 2024-05-10
+- /chat endpoint does not require `message:` parameter anymore
+
 ## [0.9.9] - 2024-04-05
 - Adding missing parameters to endpoints
 
