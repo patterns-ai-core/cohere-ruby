@@ -35,6 +35,7 @@ module Cohere
       presence_penalty: nil,
       tools: [],
       tool_results: nil,
+      force_single_step: true, # default to true for backwards compatibility prior 6/10/2024 change
       &block
     )
       response = connection.post("chat") do |req|
@@ -62,6 +63,7 @@ module Cohere
         req.body[:presence_penalty] = presence_penalty if presence_penalty
         req.body[:tools] = tools if tools
         req.body[:tool_results] = tool_results if tool_results
+        req.body[:force_single_step] = force_single_step
       end
       response.body
     end
@@ -115,6 +117,26 @@ module Cohere
         req.body[:model] = model if model
         req.body[:input_type] = input_type if input_type
         req.body[:truncate] = truncate if truncate
+      end
+      response.body
+    end
+
+    def rerank(
+      query:,
+      documents: [],
+      top_n: nil,
+      rank_fields: nil,
+      return_documents: nil,
+      max_chunks_per_doc: nil,
+      model: nil
+    )
+      response = connection.post("rerank") do |req|
+        req.body = { query:, documents: }
+        req.body[:top_n] = top_n if top_n
+        req.body[:rank_fields] = rank_fields if rank_fields
+        req.body[:return_documents] = return_documents if return_documents
+        req.body[:max_chunks_per_doc] = max_chunks_per_doc if max_chunks_per_doc
+        req.body[:model] = model if model
       end
       response.body
     end
