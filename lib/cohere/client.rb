@@ -14,7 +14,7 @@ module Cohere
     end
 
     def chat(
-      message:,
+      message: nil,
       model: nil,
       stream: false,
       preamble: nil,
@@ -39,7 +39,9 @@ module Cohere
       &block
     )
       response = connection.post("chat") do |req|
-        req.body = {message: message}
+        req.body = {}
+
+        req.body[:message] = message if message
         req.body[:model] = model if model
         if stream || block
           req.body[:stream] = true
