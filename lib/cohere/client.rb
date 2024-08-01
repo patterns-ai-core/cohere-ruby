@@ -140,7 +140,6 @@ module Cohere
         req.body[:max_chunks_per_doc] = max_chunks_per_doc if max_chunks_per_doc
       end
       response.body
-
     end
 
     def classify(
