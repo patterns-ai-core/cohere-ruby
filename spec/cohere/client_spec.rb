@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe Cohere::Client do
-  let(:instance) { described_class.new(api_key: "123") }
+  subject { described_class.new(api_key: "123") }
 
   describe "#generate" do
     let(:generate_result) { JSON.parse(File.read("spec/fixtures/generate_result.json")) }
@@ -16,7 +16,7 @@ RSpec.describe Cohere::Client do
     end
 
     it "returns a response" do
-      expect(instance.generate(
+      expect(subject.generate(
         prompt: "Once upon a time in a magical land called"
       ).dig("generations").first.dig("text")).to eq(" The Past there was a Game called Warhammer Fantasy Battle.")
     end
@@ -33,9 +33,38 @@ RSpec.describe Cohere::Client do
     end
 
     it "returns a response" do
-      expect(instance.embed(
+      expect(subject.embed(
         texts: ["hello!"]
       ).dig("embeddings")).to eq([[1.2177734, 0.67529297, 2.0742188]])
+    end
+  end
+
+  describe "#rerank" do
+    let(:embed_result) { JSON.parse(File.read("spec/fixtures/rerank.json")) }
+    let(:response) { OpenStruct.new(body: embed_result) }
+    let(:docs) {
+      [
+        "Carson City is the capital city of the American state of Nevada.",
+        "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.",
+        "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages.",
+        "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.",
+        "Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states."
+      ]
+    }
+
+    before do
+      allow_any_instance_of(Faraday::Connection).to receive(:post)
+        .with("rerank")
+        .and_return(response)
+    end
+
+    it "returns a response" do
+      expect(
+        subject
+          .rerank(query: "What is the capital of the United States?", documents: docs)
+          .dig("results")
+          .map { |h| h["index"] }
+      ).to eq([3, 4, 2, 0, 1])
     end
   end
 
@@ -64,7 +93,7 @@ RSpec.describe Cohere::Client do
     end
 
     it "returns a response" do
-      res = instance.classify(
+      res = subject.classify(
         inputs: inputs,
         examples: examples
       ).dig("classifications")
@@ -85,7 +114,7 @@ RSpec.describe Cohere::Client do
     end
 
     it "returns a response" do
-      expect(instance.tokenize(
+      expect(subject.tokenize(
         text: "Hello, world!"
       ).dig("tokens")).to eq([33555, 1114, 34])
     end
@@ -102,7 +131,7 @@ RSpec.describe Cohere::Client do
     end
 
     it "returns a response" do
-      expect(instance.tokenize(
+      expect(subject.tokenize(
         text: "Hello, world!",
         model: "base"
       ).dig("tokens")).to eq([33555, 1114, 34])
@@ -120,7 +149,7 @@ RSpec.describe Cohere::Client do
     end
 
     it "returns a response" do
-      expect(instance.detokenize(
+      expect(subject.detokenize(
         tokens: [33555, 1114, 34]
       ).dig("text")).to eq("hello world!")
     end
@@ -137,7 +166,7 @@ RSpec.describe Cohere::Client do
     end
 
     it "returns a response" do
-      expect(instance.detokenize(
+      expect(subject.detokenize(
         tokens: [33555, 1114, 34],
         model: "base"
       ).dig("text")).to eq("hello world!")
@@ -155,7 +184,7 @@ RSpec.describe Cohere::Client do
     end
 
     it "returns a response" do
-      expect(instance.detect_language(
+      expect(subject.detect_language(
         texts: ["Здравствуй, Мир"]
       ).dig("results").first.dig("language_code")).to eq("ru")
     end
@@ -172,7 +201,7 @@ RSpec.describe Cohere::Client do
     end
 
     it "returns a response" do
-      expect(instance.summarize(
+      expect(subject.summarize(
         text: "Ice cream is a sweetened frozen food typically eaten as a snack or dessert. " \
               "It may be made from milk or cream and is flavoured with a sweetener, " \
               "either sugar or an alternative, and a spice, such as cocoa or vanilla, " \
