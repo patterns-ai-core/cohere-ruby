@@ -110,10 +110,10 @@ docs = [
 ]
 
 client.rerank(
-  texts: ["hello!"]
+  query: "What is the capital of the United States?",
+  documents: docs
 )
 ```
-
 
 ### Classify
 
