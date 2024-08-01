@@ -1,7 +1,7 @@
 # Cohere
 
 <p>
-    <img alt='Weaviate logo' src='https://static.wikia.nocookie.net/logopedia/images/d/d4/Cohere_2023.svg/revision/latest?cb=20230419182227' height='50' />
+    <img alt='Cohere logo' src='https://static.wikia.nocookie.net/logopedia/images/d/d4/Cohere_2023.svg/revision/latest?cb=20230419182227' height='50' />
     +&nbsp;&nbsp;
     <img alt='Ruby logo' src='https://user-images.githubusercontent.com/541665/230231593-43861278-4550-421d-a543-fd3553aac4f6.png' height='40' />
 </p>
@@ -42,7 +42,7 @@ client = Cohere::Client.new(
 
 ```ruby
 client.generate(
-    prompt: "Once upon a time in a magical land called"
+  prompt: "Once upon a time in a magical land called"
 )
 ```
 
@@ -50,7 +50,7 @@ client.generate(
 
 ```ruby
 client.chat(
-    message: "Hey! How are you?"
+  message: "Hey! How are you?"
 )
 ```
 
@@ -90,30 +90,45 @@ client.chat(
 )
 ```
 
-
-
 ### Embed
 
 ```ruby
 client.embed(
-    texts: ["hello!"]
+  texts: ["hello!"]
 )
 ```
+
+### Rerank
+
+```ruby
+docs = [
+  "Carson City is the capital city of the American state of Nevada.",
+  "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.",
+  "Capitalization or capitalisation in English grammar is the use of a capital letter at the start of a word. English usage varies from capitalization in other languages.",
+  "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.",
+  "Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states.",
+]
+
+client.rerank(
+  texts: ["hello!"]
+)
+```
+
 
 ### Classify
 
 ```ruby
 examples = [
-    { text: "Dermatologists don't like her!", label: "Spam" },
-    { text: "Hello, open to this?", label: "Spam" },
-    { text: "I need help please wire me $1000 right now", label: "Spam" },
-    { text: "Nice to know you ;)", label: "Spam" },
-    { text: "Please help me?", label: "Spam" },
-    { text: "Your parcel will be delivered today", label: "Not spam" },
-    { text: "Review changes to our Terms and Conditions", label: "Not spam" },
-    { text: "Weekly sync notes", label: "Not spam" },
-    { text: "Re: Follow up from today's meeting", label: "Not spam" },
-    { text: "Pre-read for tomorrow", label: "Not spam" }
+  { text: "Dermatologists don't like her!", label: "Spam" },
+  { text: "Hello, open to this?", label: "Spam" },
+  { text: "I need help please wire me $1000 right now", label: "Spam" },
+  { text: "Nice to know you ;)", label: "Spam" },
+  { text: "Please help me?", label: "Spam" },
+  { text: "Your parcel will be delivered today", label: "Not spam" },
+  { text: "Review changes to our Terms and Conditions", label: "Not spam" },
+  { text: "Weekly sync notes", label: "Not spam" },
+  { text: "Re: Follow up from today's meeting", label: "Not spam" },
+  { text: "Pre-read for tomorrow", label: "Not spam" }
 ]
 
 inputs = [
@@ -122,8 +137,8 @@ inputs = [
 ]
 
 client.classify(
-    examples: examples,
-    inputs: inputs
+  examples: examples,
+  inputs: inputs
 )
 ```
 
@@ -131,7 +146,7 @@ client.classify(
 
 ```ruby
 client.tokenize(
-    text: "hello world!"
+  text: "hello world!"
 )
 ```
 
@@ -139,7 +154,7 @@ client.tokenize(
 
 ```ruby
 client.detokenize(
-    tokens: [33555, 1114 , 34]
+  tokens: [33555, 1114 , 34]
 )
 ```
 
@@ -147,7 +162,7 @@ client.detokenize(
 
 ```ruby
 client.detect_language(
-    texts: ["Здравствуй, Мир"]
+  texts: ["Здравствуй, Мир"]
 )
 ```
 
@@ -155,7 +170,7 @@ client.detect_language(
 
 ```ruby
 client.summarize(
-    text: "..."
+  text: "..."
 )
 ```
 

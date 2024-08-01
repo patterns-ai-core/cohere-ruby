@@ -119,6 +119,30 @@ module Cohere
       response.body
     end
 
+    def rerank(
+      query:,
+      documents:,
+      model: nil,
+      top_n: nil,
+      rank_fields: nil,
+      return_documents: nil,
+      max_chunks_per_doc: nil
+    )
+      response = connection.post("rerank") do |req|
+        req.body = {
+          query: query,
+          documents: documents
+        }
+        req.body[:model] = model if model
+        req.body[:top_n] = top_n if top_n
+        req.body[:rank_fields] = rank_fields if rank_fields
+        req.body[:return_documents] = return_documents if return_documents
+        req.body[:max_chunks_per_doc] = max_chunks_per_doc if max_chunks_per_doc
+      end
+      response.body
+
+    end
+
     def classify(
       inputs:,
       examples:,

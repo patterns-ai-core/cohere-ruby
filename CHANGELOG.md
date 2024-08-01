@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+## [0.9.11] - 2024-08-01
+- New `rerank()` method
+
 ## [0.9.10] - 2024-05-10
 - /chat endpoint does not require `message:` parameter anymore
 
