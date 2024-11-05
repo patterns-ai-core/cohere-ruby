@@ -6,7 +6,7 @@ module Cohere
   class Client
     attr_reader :api_key, :connection
 
-    ENDPOINT_URL = "https://api.cohere.ai/v1"
+    ENDPOINT_URL = "https://api.cohere.com/v2"
 
     def initialize(api_key:, timeout: nil)
       @api_key = api_key
