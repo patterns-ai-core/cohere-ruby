@@ -1,4 +1,5 @@
 ## [Unreleased]
+- Migrate to v2 APIs
 
 ## [0.9.11] - 2024-08-01
 - New `rerank()` method

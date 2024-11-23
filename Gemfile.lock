@@ -9,6 +9,7 @@ GEM
   specs:
     ast (2.4.2)
     diff-lcs (1.5.0)
+    dotenv (2.8.1)
     faraday (2.7.10)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -74,6 +75,7 @@ PLATFORMS
 
 DEPENDENCIES
   cohere-ruby!
+  dotenv (~> 2.8.1)
   rake (~> 13.0)
   rspec (~> 3.0)
   standard (~> 1.28.0)

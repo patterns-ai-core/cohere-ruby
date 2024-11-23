@@ -1,0 +1,35 @@
+{
+  "id": "dd6484b4-952a-45d1-8e2a-1fbcadf1a3bc",
+  "classifications": [
+    {
+      "classification_type": "single-label",
+      "confidence": 0.66766936,
+      "confidences": [0.66766936],
+      "id": "5abf9fea-dcb1-42cb-8bc7-e797c80f2293",
+      "input": "Confirm your email address",
+      "labels": {
+        "Not spam": { "confidence": 0.66766936 },
+        "Spam": { "confidence": 0.33233067 }
+      },
+      "prediction": "Not spam",
+      "predictions": ["Not spam"]
+    },
+    {
+      "classification_type": "single-label",
+      "confidence": 0.5345887,
+      "confidences": [0.5345887],
+      "id": "75ddba7e-466d-408a-aca2-78165e6f1dfa",
+      "input": "hey i need u to send some $",
+      "labels": {
+        "Not spam": { "confidence": 0.46541128 },
+        "Spam": { "confidence": 0.5345887 }
+      },
+      "prediction": "Spam",
+      "predictions": ["Spam"]
+    }
+  ],
+  "meta": {
+    "api_version": { "version": "2" },
+    "billed_units": { "classifications": 2 }
+  }
+}
