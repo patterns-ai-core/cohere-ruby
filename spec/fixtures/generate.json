@@ -1,0 +1,15 @@
+{
+  "id": "a6bdaf27-5050-4ec1-862e-cdc171245692",
+  "generations": [
+    {
+      "id": "2dcf03a3-e375-4aa5-b442-ab95bdc5f989",
+      "text": " The Past there was a Game called Warhammer Fantasy Battle."
+    }
+  ],
+  "prompt": "Once upon a time in a magical land called",
+  "meta": {
+    "api_version": {
+      "version": "1"
+    }
+  }
+}

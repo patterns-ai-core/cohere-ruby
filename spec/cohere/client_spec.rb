@@ -5,6 +5,23 @@ require "spec_helper"
 RSpec.describe Cohere::Client do
   subject { described_class.new(api_key: "123") }
 
+  describe "#generate" do
+    let(:generate_result) { JSON.parse(File.read("spec/fixtures/generate.json")) }
+    let(:response) { OpenStruct.new(body: generate_result) }
+
+    before do
+      allow_any_instance_of(Faraday::Connection).to receive(:post)
+        .with("generate")
+        .and_return(response)
+    end
+
+    it "returns a response" do
+      expect(subject.generate(
+        prompt: "Once upon a time in a magical land called"
+      ).dig("generations").first.dig("text")).to eq(" The Past there was a Game called Warhammer Fantasy Battle.")
+    end
+  end
+
   describe "#chat" do
     let(:generate_result) { JSON.parse(File.read("spec/fixtures/chat.json")) }
     let(:response) { OpenStruct.new(body: generate_result) }

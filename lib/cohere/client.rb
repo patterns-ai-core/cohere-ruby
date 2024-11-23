@@ -78,7 +78,7 @@ module Cohere
       logit_bias: nil,
       truncate: nil
     )
-      response = connection.post("generate") do |req|
+      response = v1_connection.post("generate") do |req|
         req.body = {prompt: prompt}
         req.body[:model] = model if model
         req.body[:num_generations] = num_generations if num_generations

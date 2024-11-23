@@ -98,7 +98,10 @@ client.chat(
 
 ```ruby
 client.embed(
-  texts: ["hello!"]
+  model: "embed-english-v3.0",
+  texts: ["hello", "goodbye"],
+  input_type: "classification",
+  embedding_types: ["float"]
 )
 ```
 
@@ -114,6 +117,7 @@ docs = [
 ]
 
 client.rerank(
+  model: "rerank-english-v3.0",
   query: "What is the capital of the United States?",
   documents: docs
 )
@@ -141,8 +145,9 @@ inputs = [
 ]
 
 client.classify(
-  examples: examples,
-  inputs: inputs
+  model: "embed-multilingual-v2.0",
+  inputs: inputs,
+  examples: examples
 )
 ```
 
@@ -150,7 +155,8 @@ client.classify(
 
 ```ruby
 client.tokenize(
-  text: "hello world!"
+  model: "command-r-plus-08-2024",
+  text: "Hello, world!"
 )
 ```
 
@@ -158,7 +164,8 @@ client.tokenize(
 
 ```ruby
 client.detokenize(
-  tokens: [33555, 1114 , 34]
+  model: "command-r-plus-08-2024",
+  tokens: [33555, 1114, 34]
 )
 ```
 
