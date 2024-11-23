@@ -5,25 +5,26 @@ require "spec_helper"
 RSpec.describe Cohere::Client do
   subject { described_class.new(api_key: "123") }
 
-  describe "#generate" do
-    let(:generate_result) { JSON.parse(File.read("spec/fixtures/generate_result.json")) }
+  describe "#chat" do
+    let(:generate_result) { JSON.parse(File.read("spec/fixtures/chat.json")) }
     let(:response) { OpenStruct.new(body: generate_result) }
 
     before do
       allow_any_instance_of(Faraday::Connection).to receive(:post)
-        .with("generate")
+        .with("chat")
         .and_return(response)
     end
 
     it "returns a response" do
-      expect(subject.generate(
-        prompt: "Once upon a time in a magical land called"
-      ).dig("generations").first.dig("text")).to eq(" The Past there was a Game called Warhammer Fantasy Battle.")
+      expect(subject.chat(
+        model: "command-r-plus-08-2024",
+        messages: [{role: "user", content: "Hey! How are you?"}]
+      ).dig("message", "content", 0, "text")).to eq("I'm doing well, thank you for asking! As an AI language model, I don't have emotions or feelings, but I'm designed to provide helpful and informative responses to assist you in the best way I can. Is there anything you'd like to know or discuss today?")
     end
   end
 
   describe "#embed" do
-    let(:embed_result) { JSON.parse(File.read("spec/fixtures/embed_result.json")) }
+    let(:embed_result) { JSON.parse(File.read("spec/fixtures/embed.json")) }
     let(:response) { OpenStruct.new(body: embed_result) }
 
     before do
@@ -34,8 +35,11 @@ RSpec.describe Cohere::Client do
 
     it "returns a response" do
       expect(subject.embed(
-        texts: ["hello!"]
-      ).dig("embeddings")).to eq([[1.2177734, 0.67529297, 2.0742188]])
+        model: "embed-english-v3.0",
+        texts: ["hello", "goodbye"],
+        input_type: "classification",
+        embedding_types: ["float"]
+      ).dig("embeddings", "float")).to eq([[0.017578125, -0.009162903, -0.046325684]])
     end
   end
 
@@ -61,7 +65,7 @@ RSpec.describe Cohere::Client do
     it "returns a response" do
       expect(
         subject
-          .rerank(query: "What is the capital of the United States?", documents: docs)
+          .rerank(model: "rerank-english-v3.0", query: "What is the capital of the United States?", documents: docs)
           .dig("results")
           .map { |h| h["index"] }
       ).to eq([3, 4, 2, 0, 1])
@@ -69,17 +73,19 @@ RSpec.describe Cohere::Client do
   end
 
   describe "#classify" do
-    let(:classify_result) { JSON.parse(File.read("spec/fixtures/classify_result.json")) }
+    let(:classify_result) { JSON.parse(File.read("spec/fixtures/classify.json")) }
     let(:response) { OpenStruct.new(body: classify_result) }
 
-    let(:inputs) {
+    let(:examples) {
       [
         {text: "Dermatologists don't like her!", label: "Spam"},
-        {text: "Hello, open to this?", label: "Spam"}
+        {text: "Hello, open to this?", label: "Spam"},
+        {text: "Your parcel will be delivered today", label: "Not spam"},
+        {text: "Review changes to our Terms and Conditions", label: "Not spam"}
       ]
     }
 
-    let(:examples) {
+    let(:inputs) {
       [
         "Confirm your email address",
         "hey i need u to send some $"
@@ -94,6 +100,7 @@ RSpec.describe Cohere::Client do
 
     it "returns a response" do
       res = subject.classify(
+        model: "embed-multilingual-v2.0",
         inputs: inputs,
         examples: examples
       ).dig("classifications")
@@ -104,7 +111,7 @@ RSpec.describe Cohere::Client do
   end
 
   describe "#tokenize" do
-    let(:tokenize_result) { JSON.parse(File.read("spec/fixtures/tokenize_result.json")) }
+    let(:tokenize_result) { JSON.parse(File.read("spec/fixtures/tokenize.json")) }
     let(:response) { OpenStruct.new(body: tokenize_result) }
 
     before do
@@ -115,31 +122,14 @@ RSpec.describe Cohere::Client do
 
     it "returns a response" do
       expect(subject.tokenize(
+        model: "command-r-plus-08-2024",
         text: "Hello, world!"
       ).dig("tokens")).to eq([33555, 1114, 34])
     end
   end
 
-  describe "#tokenize_with_model" do
-    let(:tokenize_result) { JSON.parse(File.read("spec/fixtures/tokenize_result.json")) }
-    let(:response) { OpenStruct.new(body: tokenize_result) }
-
-    before do
-      allow_any_instance_of(Faraday::Connection).to receive(:post)
-        .with("tokenize")
-        .and_return(response)
-    end
-
-    it "returns a response" do
-      expect(subject.tokenize(
-        text: "Hello, world!",
-        model: "base"
-      ).dig("tokens")).to eq([33555, 1114, 34])
-    end
-  end
-
   describe "#detokenize" do
-    let(:detokenize_result) { JSON.parse(File.read("spec/fixtures/detokenize_result.json")) }
+    let(:detokenize_result) { JSON.parse(File.read("spec/fixtures/detokenize.json")) }
     let(:response) { OpenStruct.new(body: detokenize_result) }
 
     before do
@@ -150,31 +140,14 @@ RSpec.describe Cohere::Client do
 
     it "returns a response" do
       expect(subject.detokenize(
+        model: "command-r-plus-08-2024",
         tokens: [33555, 1114, 34]
       ).dig("text")).to eq("hello world!")
     end
   end
 
-  describe "#detokenize_with_model" do
-    let(:detokenize_result) { JSON.parse(File.read("spec/fixtures/detokenize_result.json")) }
-    let(:response) { OpenStruct.new(body: detokenize_result) }
-
-    before do
-      allow_any_instance_of(Faraday::Connection).to receive(:post)
-        .with("detokenize")
-        .and_return(response)
-    end
-
-    it "returns a response" do
-      expect(subject.detokenize(
-        tokens: [33555, 1114, 34],
-        model: "base"
-      ).dig("text")).to eq("hello world!")
-    end
-  end
-
   describe "#detect_language" do
-    let(:detect_language_result) { JSON.parse(File.read("spec/fixtures/detect_language_result.json")) }
+    let(:detect_language_result) { JSON.parse(File.read("spec/fixtures/detect_language.json")) }
     let(:response) { OpenStruct.new(body: detect_language_result) }
 
     before do
@@ -191,7 +164,7 @@ RSpec.describe Cohere::Client do
   end
 
   describe "#summarize" do
-    let(:summarize_result) { JSON.parse(File.read("spec/fixtures/summarize_result.json")) }
+    let(:summarize_result) { JSON.parse(File.read("spec/fixtures/summarize.json")) }
     let(:response) { OpenStruct.new(body: summarize_result) }
 
     before do

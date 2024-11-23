@@ -8,12 +8,12 @@
 
 Cohere API client for Ruby.
 
-Part of the [Langchain.rb](https://github.com/andreibondarev/langchainrb) stack.
+Part of the [Langchain.rb](https://github.com/patterns-ai-core/langchainrb) stack.
 
-![Tests status](https://github.com/andreibondarev/cohere-ruby/actions/workflows/ci.yml/badge.svg)
+![Tests status](https://github.com/patterns-ai-core/cohere-ruby/actions/workflows/ci.yml/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/cohere-ruby.svg)](https://badge.fury.io/rb/cohere-ruby)
 [![Docs](http://img.shields.io/badge/yard-docs-blue.svg)](http://rubydoc.info/gems/cohere-ruby)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/andreibondarev/cohere-ruby/blob/main/LICENSE.txt)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/patterns-ai-core/cohere-ruby/blob/main/LICENSE.txt)
 [![](https://dcbadge.vercel.app/api/server/WDARp7J2n8?compact=true&style=flat)](https://discord.gg/WDARp7J2n8)
 
 ## Installation
@@ -50,14 +50,18 @@ client.generate(
 
 ```ruby
 client.chat(
-  message: "Hey! How are you?"
+  model: "command-r-plus-08-2024",
+  messages: [{role:"user", content: "Hey! How are you?"}]
 )
 ```
 
 `chat` supports a streaming option. You can pass a block to the `chat` method and it will yield a new chunk as soon as it is received.
 
 ```ruby
-client.chat(message: "Hey! How are you?", stream: true) do |chunk, overall_received_bytes|
+client.chat(
+  model: "command-r-plus-08-2024",
+  messages: [{role:"user", content: "Hey! How are you?"}]
+) do |chunk, overall_received_bytes|
   puts "Received #{overall_received_bytes} bytes: #{chunk.force_encoding(Encoding::UTF_8)}"
 end
 ```
@@ -68,25 +72,25 @@ end
 
 ```ruby
 tools = [
-   {
-     name: "query_daily_sales_report",
-     description: "Connects to a database to retrieve overall sales volumes and sales information for a given day.",
-     parameter_definitions: {
-       day: {
-         description: "Retrieves sales data for this day, formatted as YYYY-MM-DD.",
-         type: "str",
-         required: true
-       }
-     }
-   }
+  {
+    name: "query_daily_sales_report",
+    description: "Connects to a database to retrieve overall sales volumes and sales information for a given day.",
+    parameter_definitions: {
+      day: {
+        description: "Retrieves sales data for this day, formatted as YYYY-MM-DD.",
+        type: "str",
+        required: true
+      }
+    }
+  }
 ]
 
 message = "Can you provide a sales summary for 29th September 2023, and also give me some details about the products in the 'Electronics' category, for example their prices and stock levels?"
 
 client.chat(
   model: model,
-  message: message,
-  tools: tools,
+  messages: [{ role:"user", content: message }],
+  tools: tools
 )
 ```
 
