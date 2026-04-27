@@ -38,6 +38,30 @@ client = Cohere::Client.new(
 )
 ```
 
+#### Custom HTTP adapter
+
+By default the client uses `Faraday.default_adapter` (Net::HTTP), which opens a
+new TCP/TLS connection per request. For high-throughput use cases, pass a
+persistent adapter to reuse connections across requests:
+
+```ruby
+require "faraday/net_http_persistent"
+
+client = Cohere::Client.new(
+  api_key: ENV['COHERE_API_KEY'],
+  adapter: :net_http_persistent
+)
+```
+
+You can also pass adapter options:
+
+```ruby
+client = Cohere::Client.new(
+  api_key: ENV['COHERE_API_KEY'],
+  adapter: [:net_http_persistent, {name: "cohere", pool_size: 10}]
+)
+```
+
 ### Generate
 
 ```ruby

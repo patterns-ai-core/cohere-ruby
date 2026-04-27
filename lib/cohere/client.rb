@@ -4,11 +4,12 @@ require "faraday"
 
 module Cohere
   class Client
-    attr_reader :api_key, :connection
+    attr_reader :api_key, :connection, :adapter
 
-    def initialize(api_key:, timeout: nil)
+    def initialize(api_key:, timeout: nil, adapter: Faraday.default_adapter)
       @api_key = api_key
       @timeout = timeout
+      @adapter = adapter
     end
 
     # Generates a text response to a user message and streams it down, token by token
@@ -215,7 +216,7 @@ module Cohere
         faraday.request :authorization, :Bearer, api_key
         faraday.request :json
         faraday.response :json, content_type: /\bjson$/
-        faraday.adapter Faraday.default_adapter
+        faraday.adapter(*Array(@adapter))
       end
     end
 
@@ -224,7 +225,7 @@ module Cohere
         faraday.request :authorization, :Bearer, api_key
         faraday.request :json
         faraday.response :json, content_type: /\bjson$/
-        faraday.adapter Faraday.default_adapter
+        faraday.adapter(*Array(@adapter))
       end
     end
   end
