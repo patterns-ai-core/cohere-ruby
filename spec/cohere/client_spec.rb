@@ -5,6 +5,24 @@ require "spec_helper"
 RSpec.describe Cohere::Client do
   subject { described_class.new(api_key: "123") }
 
+  describe "#initialize" do
+    it "defaults to Faraday.default_adapter" do
+      client = described_class.new(api_key: "x")
+      expect(client.adapter).to eq(Faraday.default_adapter)
+    end
+
+    it "accepts a custom adapter" do
+      client = described_class.new(api_key: "x", adapter: :test)
+      expect(client.adapter).to eq(:test)
+    end
+
+    it "accepts an adapter with options" do
+      adapter = [:net_http_persistent, {name: "cohere", pool_size: 10}]
+      client = described_class.new(api_key: "x", adapter: adapter)
+      expect(client.adapter).to eq(adapter)
+    end
+  end
+
   describe "#generate" do
     let(:generate_result) { JSON.parse(File.read("spec/fixtures/generate.json")) }
     let(:response) { OpenStruct.new(body: generate_result) }
