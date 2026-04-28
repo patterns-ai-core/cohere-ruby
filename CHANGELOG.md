@@ -1,4 +1,6 @@
 ## [Unreleased]
+
+## [1.0.2] - 2026-04-27
 - Add `adapter:` keyword argument to `Cohere::Client.new` for configuring the Faraday HTTP adapter (defaults to `Faraday.default_adapter`). Enables using persistent adapters such as `:net_http_persistent` to amortize TCP/TLS handshakes across requests.
 
 ## [1.0.1] - 2024-11-22
